@@ -4,11 +4,13 @@
 // const chalk = require('chalk');
 import arg from 'arg';
 import chalk from 'chalk';
+import getConfig from '../src/config/config-mgr.js';
+import start from '../src/commands/start.js';
 // import { join } from 'path';
 
-import { createRequire } from 'module';
-import { pkgUp, pkgUpSync } from 'pkg-up';
-const require = createRequire(import.meta.url);
+// import { createRequire } from 'module';
+// import { pkgUp, pkgUpSync } from 'pkg-up';
+// const require = createRequire(import.meta.url);
 
 // console.log(process.argv)
 // console.log('hello tool');
@@ -24,16 +26,10 @@ try{
   
   if (args['--start']) {
     // const pkg =  require(join(process.cwd(), './package.json'));
-    const pkgpath = pkgUpSync({cwd: process.cwd()});
-    const pkg = require(pkgpath);
-    console.log(pkg) 
-    if(pkg.tool){
-      console.log('Found Configuration', pkg.tool);
-      
-    }else {
-      console.log(chalk.yellow('could not find a Configuration using default'))
-    }
-
+    // const pkgpath = pkgUpSync({cwd: process.cwd()});
+    // const pkg = require(pkgpath);
+    const config = getConfig();
+    start(config) 
     console.log(chalk.cyan('starting the app'));
   }
 } catch (e){

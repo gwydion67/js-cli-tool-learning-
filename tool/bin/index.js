@@ -6,6 +6,9 @@ import arg from 'arg';
 import chalk from 'chalk';
 import getConfig from '../src/config/config-mgr.js';
 import start from '../src/commands/start.js';
+
+import { createLogger } from '../src/logger.js';
+const logger = createLogger('bin');
 // import { join } from 'path';
 
 // import { createRequire } from 'module';
@@ -23,14 +26,13 @@ try{
     '--build': Boolean,
   });
   // console.log(args);
-  
+  logger.debug('Received args',args); 
   if (args['--start']) {
     // const pkg =  require(join(process.cwd(), './package.json'));
     // const pkgpath = pkgUpSync({cwd: process.cwd()});
     // const pkg = require(pkgpath);
     const config = getConfig();
     start(config) 
-    console.log(chalk.cyan('starting the app'));
   }
 } catch (e){
   console.log(chalk.yellow(e.message, '\n'));
